@@ -7,10 +7,13 @@
   --background-color: #E8EFD6;
 
   --card-radius: 33.09px;
+  --image-radius: 1000px;
   --button-radius: 100px;
 
   --max-width-card: 850px;
   --min-width-card: 360px;
+  --max-height-img: 332px;
+  --max-width-img: 850px;
 
   --title-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
   --contend-font: "Link Sans", system-ui, -apple-system, sans-serif;

@@ -1,3 +1,23 @@
 <div>
-  <img src="" alt="">
+  <div class="img-container">
+    <img src="../../public/images/hero.jpg" alt="hero-image">
+  </div>
 </div>
+
+<style>
+  .img-container{
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 18/8;
+    border-radius: var(--image-radius);
+    max-width: var(--max-width-img);
+    max-height: var(--max-height-img);
+  }
+  
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+  }
+</style>
