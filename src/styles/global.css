@@ -1,0 +1,28 @@
+@import url(https://db.onlinewebfonts.com/c/c26c0c2ba8f7711fba5695569b82cb10?family=Link+Sans+Heavy);
+@import url(https://db.onlinewebfonts.com/c/90fc7c5e1633bace7675c76b94f742eb?family=Link+Sans);
+
+*, *::before, *::after {box-sizing: border-box;}
+
+:root {
+  --background-color: #E8EFD6;
+
+  --card-radius: 33.09px;
+  --button-radius: 100px;
+
+  --max-width-card: 850px;
+  --min-width-card: 360px;
+
+  --title-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
+  --contend-font: "Link Sans", system-ui, -apple-system, sans-serif;
+}
+
+	html, body {
+    background-color: var(--background-color);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--title-font);
+
+  }
+
+
