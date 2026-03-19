@@ -1,4 +1,5 @@
 ---
+import Hero from '../components/Hero.astro'
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -7,16 +8,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 <Layout>
   <div class="main">  
+    <Hero />
     <Welcome />
   </div>
 </Layout>
 
-<style>
-  .main {
-    max-width: var(--max-width-card);
-    min-width: var(--min-width-card);
-    height: fit-content;
-    display: grid;
-    place-items: center;
-  }
-</style>
