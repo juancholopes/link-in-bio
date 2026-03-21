@@ -1,4 +1,44 @@
----
+<div class="link-container">
+  <a class="link-item" href="https://instagram.com/juancholops" target="_blank" rel="noreferrer">
+    Instagram
+  </a>
+  <a class="link-item" href="https://www.facebook.com/profile.php?id=100032943033252" target="_blank" rel="noreferrer">
+    Facebook
+  </a>
+  <a class="link-item" href="https://x.com/juancholops" target="_blank" rel="noreferrer">
+    X (Twitter)
+  </a>
+  <a class="link-item" href="https://www.linkedin.com/in/juan-carlos-lopez-moreno/" target="_blank" rel="noreferrer">
+    LinkedIn
+  </a>
+  <a class="link-item" href="https://github.com/juancholopes" target="_blank" rel="noreferrer">
+    GitHub
+  </a>
+</div>
 
----
+<style>
 
+  .link-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--btn-color);
+    font-family: var(--button-font);
+    color: var(--background-link);
+    font-size: 30px;
+    min-height: var(--button-min-height);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+  }
+
+  .link-container{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 33px;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--background-link);
+    border-radius: var(--card-radius);
+  }
+</style>

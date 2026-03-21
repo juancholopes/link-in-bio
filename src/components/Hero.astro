@@ -1,17 +1,21 @@
-<div>
+<div class="hero">
   <div class="img-container">
-    <img src="../../public/images/hero.jpg" alt="hero-image">
+    <img src="/images/hero.jpg" alt="hero-image">
   </div>
 </div>
 
 <style>
+  .hero{
+    width: 100%;
+  }
+
   .img-container{
     width: 100%;
     overflow: hidden;
     aspect-ratio: 18/8;
     border-radius: var(--image-radius);
     max-width: var(--max-width-img);
-    max-height: var(--max-height-img);
+    max-height: calc(var(--max-width-img) * 8 / 18);
   }
   
   img{

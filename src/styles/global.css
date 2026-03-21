@@ -5,10 +5,14 @@
 
 :root {
   --background-color: #E8EFD6;
+  --background-link: #061492;
+
+  --btn-color:#D2E928;
 
   --card-radius: 33.09px;
   --image-radius: 1000px;
-  --button-radius: 100px;
+  --button-radius: 1000px;
+  --button-min-height: 83.09px;
 
   --max-width-card: 850px;
   --min-width-card: 360px;
@@ -16,6 +20,7 @@
   --max-width-img: 850px;
 
   --title-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
+  --button-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
   --contend-font: "Link Sans", system-ui, -apple-system, sans-serif;
 }
 
@@ -36,6 +41,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 33.09px;
 }
 
 
