@@ -17,7 +17,7 @@ export const GET: APIRoute = async () => {
     const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
