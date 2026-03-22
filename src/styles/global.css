@@ -6,8 +6,8 @@
 :root {
   --background-color: #E8EFD6;
   --background-link: #061492;
-
   --btn-color:#D2E928;
+  --spotify-widget-card: #1ED760;
 
   --card-radius: 33.09px;
   --image-radius: 1000px;
@@ -30,10 +30,16 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--title-font);
+  }
 
+  p {
+    font-family: var(--title-font);
+  
   }
 
 .main {
+    padding-top: 33px;
+    padding-bottom: 33px;
     max-width: var(--max-width-card);
     min-width: var(--min-width-card);
     margin: 0 auto;
