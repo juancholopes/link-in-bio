@@ -1,0 +1,146 @@
+---
+const fallback = {
+  isPlaying: false,
+  album: null,
+  artist: null,
+  image: null,
+}
+
+let spotify = fallback
+
+try {
+  const apiUrl = new URL('/api/spotify', Astro.url)
+  const res = await fetch(apiUrl)
+  const contentType = res.headers.get('content-type') ?? ''
+
+  if (!res.ok || !contentType.includes('application/json')) {
+    throw new Error(`Invalid Spotify API response: ${res.status} ${contentType}`)
+  }
+
+  spotify = { ...fallback, ...(await res.json()) }
+} catch (error) {
+  console.error('Spotify widget fetch error', error)
+}
+
+const { isPlaying, album, artist, image } = spotify
+---
+
+<div class="spotify-widget">
+  <section >
+    <div class="header">
+      <h1>Spotify</h1>
+      <img class="spotify-icon" src="/icons/spotify.svg" alt="spotify-icon">
+    </div>
+    <div class="spotify-content">
+      <img id="spotify-album-image" class="spotify-album" src={image ?? ''} alt="image-album">
+      <div class="spotify-music">
+        <p id="spotify-album-text">{isPlaying ? album ?? 'Unknown album' : 'Not playing right now'}</p>
+        <p id="spotify-artist-text">{isPlaying ? artist ?? 'Unknown artist' : ''}</p>
+      </div>
+    </div>
+   </section>
+</div>
+
+<script is:inline>
+  const spotifyFallback = {
+    isPlaying: false,
+    album: null,
+    artist: null,
+    image: null,
+  }
+
+  const albumTextEl = document.getElementById('spotify-album-text')
+  const artistTextEl = document.getElementById('spotify-artist-text')
+  const albumImageEl = document.getElementById('spotify-album-image')
+
+  function renderSpotify(data) {
+    const spotify = { ...spotifyFallback, ...data }
+    const albumText = spotify.isPlaying
+      ? (spotify.album ?? 'Unknown album')
+      : 'Not playing right now'
+    const artistText = spotify.isPlaying
+      ? (spotify.artist ?? 'Unknown artist')
+      : ''
+
+    if (albumTextEl) albumTextEl.textContent = albumText
+    if (artistTextEl) artistTextEl.textContent = artistText
+
+    if (albumImageEl) {
+      albumImageEl.src = spotify.image ?? ''
+    }
+  }
+
+  async function refreshSpotify() {
+    try {
+      const res = await fetch('/api/spotify', { cache: 'no-store' })
+      const contentType = res.headers.get('content-type') ?? ''
+
+      if (!res.ok || !contentType.includes('application/json')) {
+        throw new Error(`Invalid Spotify API response: ${res.status} ${contentType}`)
+      }
+
+      const data = await res.json()
+      renderSpotify(data)
+    } catch (error) {
+      console.error('Spotify widget interval fetch error', error)
+    }
+  }
+
+  const spotifyIntervalId = setInterval(refreshSpotify, 10000)
+
+  window.addEventListener('beforeunload', () => {
+    clearInterval(spotifyIntervalId)
+  })
+</script>
+
+<style>
+  p{
+    margin: 0;
+  }
+
+  p:first-child{
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+.spotify-widget {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: var(--card-radius);
+  background-color: var(--spotify-widget-card);
+  padding: 41px;
+}
+
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.spotify-icon{
+  width: 64px;
+}
+
+.spotify-album{
+  width: 145px;
+  border-radius: 23.09px;
+
+}
+
+.spotify-content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2vw;
+}
+
+.spotify-music{
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+
+}
+
+</style>
