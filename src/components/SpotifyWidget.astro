@@ -62,22 +62,30 @@ const { isPlaying, album, artist, image } = spotify
   const artistTextEl = document.getElementById('spotify-artist-text')
   const albumImageEl = document.getElementById('spotify-album-image')
 
-  function renderSpotify(data) {
-    const spotify = { ...spotifyFallback, ...data }
-    const albumText = spotify.isPlaying
-      ? (spotify.album ?? 'Unknown album')
-      : 'Not playing right now'
-    const artistText = spotify.isPlaying
-      ? (spotify.artist ?? 'Unknown artist')
-      : ''
+function renderSpotify(data) {
+  const spotify = { ...spotifyFallback, ...data }
+  
+  const albumText = spotify.isPlaying ? (spotify.album ?? 'Unknown album') : 'Not playing right now'
+  const artistText = spotify.isPlaying ? (spotify.artist ?? 'Unknown artist') : ''
 
-    if (albumTextEl) albumTextEl.textContent = albumText
-    if (artistTextEl) artistTextEl.textContent = artistText
+  if (albumTextEl) albumTextEl.textContent = albumText
+  if (artistTextEl) artistTextEl.textContent = artistText
 
-    if (albumImageEl) {
-      albumImageEl.src = spotify.image ?? ''
+  if (albumImageEl) {
+    if (spotify.image) {
+      if (albumImageEl.tagName === 'IMG') {
+        albumImageEl.src = spotify.image
+      } else {
+        const img = document.createElement('img')
+        img.id = 'spotify-album-image'
+        img.className = 'spotify-album'
+        img.src = spotify.image
+        img.alt = 'album-cover'
+        albumImageEl.replaceWith(img)
+      }
     }
   }
+}
 
   async function refreshSpotify() {
     try {
