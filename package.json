@@ -14,5 +14,8 @@
   "dependencies": {
     "astro": "^6.0.4",
     "canvas-confetti": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0"
   }
 }

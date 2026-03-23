@@ -3,7 +3,6 @@
     Instagram
   </a>
   <a data-confetti-button class="link-item" href="https://www.facebook.com/profile.php?id=100032943033252" target="_blank" rel="noreferrer">
-
     Facebook
   </a>
   <a data-confetti-button class="link-item" href="https://x.com/juancholops" target="_blank" rel="noreferrer">
@@ -20,15 +19,15 @@
 <script>
   import confetti from 'canvas-confetti';
 
-  const buttons = document.querySelectorAll('[data-confetti-button]')
+  const buttons = document.querySelectorAll<HTMLAnchorElement>('[data-confetti-button]')
 
   buttons.forEach((button) => {
     button.addEventListener('click', (e) => {
       e.preventDefault()
 
       const rect: DOMRect = button.getBoundingClientRect()
-      const href = button.getAttribute('href')
-      const target = button.getAttribute('target')
+      const href = button.href
+      const target = button.target
       const x = (rect.left + rect.width / 2) / window.innerWidth
       const y = (rect.top + rect.height / 2) / window.innerHeight
 
