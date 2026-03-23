@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro'
 
+export const prerender = false
+
 export const GET: APIRoute = async () => {
   const clientId = import.meta.env.SPOTIFY_CLIENT_ID
   const clientSecret = import.meta.env.SPOTIFY_CLIENT_SECRET
@@ -14,10 +16,12 @@ export const GET: APIRoute = async () => {
   }
 
   try {
+    const basicAuth = btoa(`${clientId}:${clientSecret}`)
+
     const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+        Authorization: `Basic ${basicAuth}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({

@@ -8,20 +8,6 @@ const fallback = {
 
 let spotify = fallback
 
-try {
-  const apiUrl = new URL('/api/spotify', Astro.url)
-  const res = await fetch(apiUrl)
-  const contentType = res.headers.get('content-type') ?? ''
-
-  if (!res.ok || !contentType.includes('application/json')) {
-    throw new Error(`Invalid Spotify API response: ${res.status} ${contentType}`)
-  }
-
-  spotify = { ...fallback, ...(await res.json()) }
-} catch (error) {
-  console.error('Spotify widget fetch error', error)
-}
-
 const { isPlaying, album, artist, image } = spotify
 ---
 
@@ -103,6 +89,7 @@ function renderSpotify(data) {
     }
   }
 
+  refreshSpotify()
   const spotifyIntervalId = setInterval(refreshSpotify, 10000)
 
   window.addEventListener('beforeunload', () => {
