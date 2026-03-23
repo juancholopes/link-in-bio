@@ -32,16 +32,25 @@ const { isPlaying, album, artist, image } = spotify
       <img class="spotify-icon" src="/icons/spotify.svg" alt="spotify-icon">
     </div>
     <div class="spotify-content">
-      <img id="spotify-album-image" class="spotify-album" src={image ?? ''} alt="image-album">
+      {image
+  ? <img id="spotify-album-image" class="spotify-album" src={image} alt="album-cover">
+  : <div id="spotify-album-image" class="spotify-album spotify-album-fallback">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+      </svg>
+    </div>
+}
       <div class="spotify-music">
         <p id="spotify-album-text">{isPlaying ? album ?? 'Unknown album' : 'Not playing right now'}</p>
         <p id="spotify-artist-text">{isPlaying ? artist ?? 'Unknown artist' : ''}</p>
       </div>
     </div>
    </section>
+
 </div>
 
 <script is:inline>
+
   const spotifyFallback = {
     isPlaying: false,
     album: null,
@@ -99,7 +108,7 @@ const { isPlaying, album, artist, image } = spotify
   }
 
   p:first-child{
-    font-size: 28px;
+    font-size: clamp(1.125rem, 3.2vw, 1.75rem);
     font-weight: bold;
   }
 
@@ -110,7 +119,7 @@ const { isPlaying, album, artist, image } = spotify
   width: 100%;
   border-radius: var(--card-radius);
   background-color: var(--spotify-widget-card);
-  padding: 41px;
+  padding: clamp(1rem, 4.5vw, 2.6rem);
 }
 
 .header{
@@ -120,12 +129,12 @@ const { isPlaying, album, artist, image } = spotify
 }
 
 .spotify-icon{
-  width: 64px;
+  width: clamp(2rem, 8vw, 4rem);
 }
 
 .spotify-album{
-  width: 145px;
-  border-radius: 23.09px;
+  width: clamp(5.5rem, 24vw, 9rem);
+  border-radius: clamp(0.75rem, 2vw, 1.5rem);
 
 }
 
@@ -133,13 +142,13 @@ const { isPlaying, album, artist, image } = spotify
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2vw;
+  gap: clamp(0.75rem, 2.5vw, 1.5rem);
 }
 
 .spotify-music{
   display: flex;
   flex-direction: column;
-  gap: 1vh;
+  gap: clamp(0.35rem, 1.4vw, 0.75rem);
 
 }
 

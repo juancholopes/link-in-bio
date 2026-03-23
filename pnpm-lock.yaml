@@ -11,6 +11,9 @@ importers:
       astro:
         specifier: ^6.0.4
         version: 6.0.4(rollup@4.59.0)
+      canvas-confetti:
+        specifier: ^1.9.4
+        version: 1.9.4
 
 packages:
 
@@ -606,6 +609,9 @@ packages:
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
+
+  canvas-confetti@1.9.4:
+    resolution: {integrity: sha512-yxQbJkAVrFXWNbTUjPqjF7G+g6pDotOUHGbkZq2NELZUMDpiJ85rIEazVb8GTaAptNW2miJAXbs1BtioA251Pw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -1924,6 +1930,8 @@ snapshots:
   bail@2.0.2: {}
 
   boolbase@1.0.0: {}
+
+  canvas-confetti@1.9.4: {}
 
   ccount@2.0.1: {}
 

@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.0.4"
+    "astro": "^6.0.4",
+    "canvas-confetti": "^1.9.4"
   }
 }

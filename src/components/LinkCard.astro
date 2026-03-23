@@ -1,20 +1,56 @@
 <div class="link-container">
-  <a class="link-item" href="https://instagram.com/juancholops" target="_blank" rel="noreferrer">
+  <a data-confetti-button class="link-item" href="https://instagram.com/juancholops" target="_blank" rel="noreferrer">
     Instagram
   </a>
-  <a class="link-item" href="https://www.facebook.com/profile.php?id=100032943033252" target="_blank" rel="noreferrer">
+  <a data-confetti-button class="link-item" href="https://www.facebook.com/profile.php?id=100032943033252" target="_blank" rel="noreferrer">
+
     Facebook
   </a>
-  <a class="link-item" href="https://x.com/juancholops" target="_blank" rel="noreferrer">
+  <a data-confetti-button class="link-item" href="https://x.com/juancholops" target="_blank" rel="noreferrer">
     X (Twitter)
   </a>
-  <a class="link-item" href="https://www.linkedin.com/in/juan-carlos-lopez-moreno/" target="_blank" rel="noreferrer">
+  <a data-confetti-button class="link-item" href="https://www.linkedin.com/in/juan-carlos-lopez-moreno/" target="_blank" rel="noreferrer">
     LinkedIn
   </a>
-  <a class="link-item" href="https://github.com/juancholopes" target="_blank" rel="noreferrer">
+  <a data-confetti-button class="link-item" href="https://github.com/juancholopes" target="_blank" rel="noreferrer">
     GitHub
   </a>
 </div>
+
+<script>
+  import confetti from 'canvas-confetti';
+
+  const buttons = document.querySelectorAll('[data-confetti-button]')
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      const rect: DOMRect = button.getBoundingClientRect()
+      const href = button.getAttribute('href')
+      const target = button.getAttribute('target')
+      const x = (rect.left + rect.width / 2) / window.innerWidth
+      const y = (rect.top + rect.height / 2) / window.innerHeight
+
+      confetti({
+        particleCount: 150,
+        spread: 70, 
+        startVelocity: 55,
+        origin:{x, y}
+
+      })
+
+      setTimeout(() => {
+        if (target === '_blank'){
+          window.open(href, '_blank', 'noreferrer')
+        } else {
+          window.location.href = href
+        }
+      }, 500)
+    })
+  }) 
+
+</script>
 
 <style>
 
@@ -25,7 +61,7 @@
     background-color: var(--btn-color);
     font-family: var(--button-font);
     color: var(--background-link);
-    font-size: 30px;
+    font-size: clamp(1.125rem, 3.4vw, 1.875rem);
     min-height: var(--button-min-height);
     border-radius: var(--button-radius);
     text-decoration: none;
@@ -34,8 +70,8 @@
   .link-container{
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    padding: 33px;
+    gap: clamp(0.75rem, 2.6vw, 1.5rem);
+    padding: clamp(1rem, 4vw, 2.1rem);
     width: 100%;
     height: fit-content;
     background-color: var(--background-link);
