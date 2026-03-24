@@ -171,7 +171,7 @@ function renderSpotify(data) {
   }
 
   refreshSpotify()
-  const spotifyIntervalId = setInterval(refreshSpotify, 10000)
+  const spotifyIntervalId = setInterval(refreshSpotify, 5000)
 
   window.addEventListener('beforeunload', () => {
     clearInterval(spotifyIntervalId)
