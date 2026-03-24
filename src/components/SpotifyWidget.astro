@@ -46,10 +46,37 @@ const { isPlaying, album, artist, image } = spotify
 
   const albumTextEl = document.getElementById('spotify-album-text')
   const artistTextEl = document.getElementById('spotify-artist-text')
-  const albumImageEl = document.getElementById('spotify-album-image')
+
+  function getScopeAttrName(el) {
+    if (!el) return null
+    const scopeAttr = [...el.attributes].find(({ name }) => name.startsWith('data-astro-cid-'))
+    return scopeAttr?.name ?? null
+  }
+
+  function createAlbumImageElement(imageSrc, scopeAttrName) {
+    const img = document.createElement('img')
+    img.id = 'spotify-album-image'
+    img.className = 'spotify-album'
+    img.src = imageSrc
+    img.alt = 'album-cover'
+    if (scopeAttrName) img.setAttribute(scopeAttrName, '')
+    return img
+  }
+
+  function createFallbackElement(scopeAttrName) {
+    const fallback = document.createElement('div')
+    fallback.id = 'spotify-album-image'
+    fallback.className = 'spotify-album spotify-album-fallback'
+    if (scopeAttrName) fallback.setAttribute(scopeAttrName, '')
+
+    fallback.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>'
+    return fallback
+  }
 
 function renderSpotify(data) {
   const spotify = { ...spotifyFallback, ...data }
+  const albumImageEl = document.getElementById('spotify-album-image')
+  const scopeAttrName = getScopeAttrName(albumImageEl)
   
   const albumText = spotify.isPlaying ? (spotify.album ?? 'Unknown album') : 'Not playing right now'
   const artistText = spotify.isPlaying ? (spotify.artist ?? 'Unknown artist') : ''
@@ -62,13 +89,12 @@ function renderSpotify(data) {
       if (albumImageEl.tagName === 'IMG') {
         albumImageEl.src = spotify.image
       } else {
-        const img = document.createElement('img')
-        img.id = 'spotify-album-image'
-        img.className = 'spotify-album'
-        img.src = spotify.image
-        img.alt = 'album-cover'
+        const img = createAlbumImageElement(spotify.image, scopeAttrName)
         albumImageEl.replaceWith(img)
       }
+    } else if (albumImageEl.tagName === 'IMG') {
+      const fallback = createFallbackElement(scopeAttrName)
+      albumImageEl.replaceWith(fallback)
     }
   }
 }
@@ -129,8 +155,23 @@ function renderSpotify(data) {
 
 .spotify-album{
   width: clamp(5.5rem, 24vw, 9rem);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
   border-radius: clamp(0.75rem, 2vw, 1.5rem);
 
+}
+
+.spotify-album-fallback{
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.18);
+}
+
+.spotify-album-fallback svg{
+  width: 45%;
+  height: 45%;
 }
 
 .spotify-content{
