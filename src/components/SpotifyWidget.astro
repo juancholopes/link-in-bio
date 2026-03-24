@@ -1,14 +1,37 @@
 ---
 const fallback = {
   isPlaying: false,
-  album: null,
-  artist: null,
-  image: null,
+  currentlyPlayingType: null,
+  timestamp: null,
+  progressMs: null,
+  track: {
+    title: null,
+    artist: null,
+    album: null,
+    durationMs: null,
+    id: null,
+    uri: null,
+    url: null,
+  },
+  artwork: {
+    url: null,
+    width: null,
+    height: null,
+  },
+  context: {
+    type: null,
+    uri: null,
+    url: null,
+  },
 }
 
 let spotify = fallback
 
-const { isPlaying, album, artist, image } = spotify
+const { isPlaying } = spotify
+const trackTitle = spotify.track?.title
+const trackArtist = spotify.track?.artist
+const artworkUrl = spotify.artwork?.url
+const artworkWidth = spotify.artwork?.width
 ---
 
 <div class="spotify-widget">
@@ -18,8 +41,8 @@ const { isPlaying, album, artist, image } = spotify
       <img class="spotify-icon" src="/icons/spotify.svg" alt="spotify-icon">
     </div>
     <div class="spotify-content">
-      {image
-  ? <img id="spotify-album-image" class="spotify-album" src={image} alt="album-cover">
+        {artworkUrl
+      ? <img id="spotify-album-image" class="spotify-album" src={artworkUrl} width={artworkWidth ?? undefined} alt="album-cover">
   : <div id="spotify-album-image" class="spotify-album spotify-album-fallback">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
         <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
@@ -27,8 +50,8 @@ const { isPlaying, album, artist, image } = spotify
     </div>
 }
       <div class="spotify-music">
-        <p id="spotify-album-text">{isPlaying ? album ?? 'Unknown album' : 'Not playing right now'}</p>
-        <p id="spotify-artist-text">{isPlaying ? artist ?? 'Unknown artist' : ''}</p>
+        <p id="spotify-album-text">{isPlaying ? trackTitle ?? 'Unknown track' : 'Not playing right now'}</p>
+        <p id="spotify-artist-text">{isPlaying ? trackArtist ?? 'Unknown artist' : ''}</p>
       </div>
     </div>
    </section>
@@ -39,9 +62,28 @@ const { isPlaying, album, artist, image } = spotify
 
   const spotifyFallback = {
     isPlaying: false,
-    album: null,
-    artist: null,
-    image: null,
+    currentlyPlayingType: null,
+    timestamp: null,
+    progressMs: null,
+    track: {
+      title: null,
+      artist: null,
+      album: null,
+      durationMs: null,
+      id: null,
+      uri: null,
+      url: null,
+    },
+    artwork: {
+      url: null,
+      width: null,
+      height: null,
+    },
+    context: {
+      type: null,
+      uri: null,
+      url: null,
+    },
   }
 
   const albumTextEl = document.getElementById('spotify-album-text')
@@ -53,12 +95,23 @@ const { isPlaying, album, artist, image } = spotify
     return scopeAttr?.name ?? null
   }
 
-  function createAlbumImageElement(imageSrc, scopeAttrName) {
+  function applyArtworkDimensions(img, artwork) {
+    const width = Number(artwork?.width)
+
+    if (Number.isFinite(width) && width > 0) {
+      img.width = width
+    } else {
+      img.removeAttribute('width')
+    }
+  }
+
+  function createAlbumImageElement(artwork, scopeAttrName) {
     const img = document.createElement('img')
     img.id = 'spotify-album-image'
     img.className = 'spotify-album'
-    img.src = imageSrc
+    img.src = artwork.url
     img.alt = 'album-cover'
+    applyArtworkDimensions(img, artwork)
     if (scopeAttrName) img.setAttribute(scopeAttrName, '')
     return img
   }
@@ -77,19 +130,21 @@ function renderSpotify(data) {
   const spotify = { ...spotifyFallback, ...data }
   const albumImageEl = document.getElementById('spotify-album-image')
   const scopeAttrName = getScopeAttrName(albumImageEl)
+  const artwork = spotify.artwork ?? spotifyFallback.artwork
   
-  const albumText = spotify.isPlaying ? (spotify.album ?? 'Unknown album') : 'Not playing right now'
-  const artistText = spotify.isPlaying ? (spotify.artist ?? 'Unknown artist') : ''
+  const albumText = spotify.isPlaying ? (spotify.track?.title ?? 'Unknown track') : 'Not playing right now'
+  const artistText = spotify.isPlaying ? (spotify.track?.artist ?? 'Unknown artist') : ''
 
   if (albumTextEl) albumTextEl.textContent = albumText
   if (artistTextEl) artistTextEl.textContent = artistText
 
   if (albumImageEl) {
-    if (spotify.image) {
+    if (artwork?.url) {
       if (albumImageEl.tagName === 'IMG') {
-        albumImageEl.src = spotify.image
+        albumImageEl.src = artwork.url
+        applyArtworkDimensions(albumImageEl, artwork)
       } else {
-        const img = createAlbumImageElement(spotify.image, scopeAttrName)
+        const img = createAlbumImageElement(artwork, scopeAttrName)
         albumImageEl.replaceWith(img)
       }
     } else if (albumImageEl.tagName === 'IMG') {
