@@ -14,8 +14,8 @@
   --button-radius: 999rem;
   --button-min-height: clamp(3.5rem, 9vw, 5.2rem);
 
-  --max-width-card: 53.125rem;
-  --max-width-img: 53.125rem;
+  --max-width-card: 40.625rem;
+  --max-width-img: 40.625rem;
 
   --title-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
   --button-font: "Link Sans Heavy", system-ui, -apple-system, sans-serif;
